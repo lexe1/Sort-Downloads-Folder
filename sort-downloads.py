@@ -10,23 +10,12 @@ soft = user_path + '/Downloads/Soft/'
 books = user_path + '/Downloads/Books/'
 torrents = user_path + '/Downloads/Torrents/'
 
-
-try:
-    os.mkdir(music)
-except FileExistsError:
-    pass
-try:
-    os.mkdir(images)
-except FileExistsError:
-    pass
-try:
-    os.mkdir(soft)
-except FileExistsError:
-    pass
-try:
-    os.mkdir(books)
-except FileExistsError:
-    pass
+folders = [music, images, soft, books, torrents]
+for folder in folders:
+    try:
+        os.mkdir(folder)
+    except FileExistsError:
+        pass
 
 
 def sort():
@@ -34,27 +23,18 @@ def sort():
         if file.endswith('.mp3'):
             shutil.move(downloads + file, music + file)
 
-        if file.endswith('.jpg'):
-            shutil.move(downloads + file, images + file)
-        if file.endswith('.png'):
+        if file.endswith('.jpg') or file.endswith('.png'):
             shutil.move(downloads + file, images + file)
 
-        if file.endswith('.djvu'):
-            shutil.move(downloads + file, books + file)
-        if file.endswith('.epub'):
-            shutil.move(downloads + file, books + file)
-        if file.endswith('.pdf'):
-            shutil.move(downloads + file, books + file)
-        if file.endswith('.fb2'):
+        if file.endswith('.djvu') or file.endswith('.epub') or file.endswith('.pdf') or file.endswith('.fb2'):
             shutil.move(downloads + file, books + file)
 
-        if file.endswith('.exe'):
-            shutil.move(downloads + file, soft + file)
-        if file.endswith('.msi'):
+        if file.endswith('.exe') or file.endswith('.msi'):
             shutil.move(downloads + file, soft + file)
 
         if file.endswith('.torrent'):
             shutil.move(downloads + file, torrents + file)
+    print('Downloads Folder Sorted!')
 
 
 if __name__ == '__main__':

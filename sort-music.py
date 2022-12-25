@@ -5,7 +5,7 @@ from mutagen.mp3 import MP3
 user_path = os.path.expanduser('~')
 
 music = user_path + '/Downloads/Music/'
-good = user_path + '/Downloads/Music//320kbps/'
+good = user_path + '/Downloads/Music/320kbps/'
 
 
 try:
@@ -20,6 +20,7 @@ def check():
             bitrate = MP3(music + file).info.bitrate
             if bitrate == 320000:
                 shutil.move(music + file, good + file)
+    print('Music Files Sorted!')
 
 
 if __name__ == '__main__':
