@@ -1,14 +1,16 @@
 import os
 import shutil
+from mutagen.mp3 import MP3
 
 user_path = os.path.expanduser('~')
 
 downloads = user_path + '/Downloads/'
 images = user_path + '/Downloads/Images/'
-music = user_path + '/Downloads/Music/'
 soft = user_path + '/Downloads/Soft/'
 books = user_path + '/Downloads/Books/'
 torrents = user_path + '/Downloads/Torrents/'
+music = user_path + '/Downloads/Music/'
+valid = user_path + '/Downloads/Music/320kbps/'
 
 folders = [music, images, soft, books, torrents]
 for folder in folders:
@@ -34,8 +36,24 @@ def sort():
 
         if file.endswith('.torrent'):
             shutil.move(downloads + file, torrents + file)
-    print('Downloads Folder Sorted!')
+
+
+try:
+    os.mkdir(valid)
+except FileExistsError:
+    pass
+
+
+def check():
+    for file in os.listdir(music):
+        if file.endswith('.mp3'):
+            bitrate = MP3(music + file).info.bitrate
+            if bitrate == 320000:
+                shutil.move(music + file, valid + file)
+
+
+print('Done!')
 
 
 if __name__ == '__main__':
-    sort()
+    sort(), check()
